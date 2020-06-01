@@ -18,14 +18,10 @@ from matplotlib.patches import Polygon, Rectangle, Circle
 import matplotlib as mpl
 import ast
 
-#pd control 
-k = 0.1  # look forward gain
-Lfc = 1.0  # look-ahead distance
-Kp = 1.0  # speed propotional gain
+#paratmers
 Kv = 0.15  # speed propotional gain
 Ktheta = 0.8
 dt = 0.2  # [s]
-L = 1.0  # [m] wheel base of vehicle
 Region_Boundary =12.5
 
 class map_params:
