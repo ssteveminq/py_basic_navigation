@@ -2,8 +2,8 @@
 clc 
 clear all 
 close all
-K=500; %attractive potential 
-E=80; %repulsive potential
+K=50; %attractive potential 
+E=8; %repulsive potential
 % area_width=12; %potential area width (m)
 sx=2; % start pos x
 sy=2; %start pos y
@@ -11,7 +11,8 @@ gx=3; %goal pos x
 gy=-4; %goal pos y
 ox=[5 6]; %obstacle x pos
 oy= [-3 8]; %obstacle y pos
-[x,y]= meshgrid(-12:.5:12); 
+% [x,y]= meshgrid(-12:.5:12); 
+[x,y] = meshgrid(-12:1.0:12,-12:1.0:12);
 r=((x-gx).^2+(y-gx).^2).^.5;%Distance to Goal
 r1=((x-ox(1)).^2+(y-oy(1)).^2).^.5;%Distance to Obs1
 r2=((x-ox(2)).^2+(y-oy(2)).^2).^.5;%Distance to Obs2
@@ -22,7 +23,7 @@ figure(1)
 mesh(x,y,U);
 figure(2)
 contour(x,y,U);
-[Ux,Uy]=gradient(U,0.5,0.5);
+[Ux,Uy]=gradient(U,1.0);
 
 % [J]=-gradient(U);
 % gradx=zeros(49,49);
@@ -44,10 +45,14 @@ contour(x,y,U);
 % end
 % gradx=grad(:,1);
 % grady=grad(:,2);
-figure(4)
+% hold on
+[u,v,w] = surfnorm(x,y,U);
+figure
 % [x1,y1]=meshgrid(
-quiver(x,y,Ux,Uy)
-%plot(Ux,Uy);
+% quiver(x,y,0.1*Ux,0.1*Uy)
+quiver3(x,y,U,u,v,w,0.5)
+% set(h1,'AutoScale','on', 'AutoScaleFactor', 0.5)
+%plot(Ux,Uy);s
 xnew=0;
 ynew=0;
 i=1;
