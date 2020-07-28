@@ -53,6 +53,8 @@ figure
 quiver3(x,y,U,u,v,w,0.5)
 % set(h1,'AutoScale','on', 'AutoScaleFactor', 0.5)
 %plot(Ux,Uy);s
+%quiver(x,y,Ux,Uy)
+%plot(Ux,Uy);
 xnew=0;
 ynew=0;
 i=1;
@@ -68,18 +70,23 @@ alpha=.01;
 tol=1e-4;
 xi=sx;
 yi=sy;
-while errx>tol && erry>tol
-%     for xi=-12:12
-%         for yi=-12:12
-            xnew=xi-alpha*gradx(i);
-            errx = abs((xnew-xi)/xi);
-            ynew=yi-alpha*grady(i);
-            err = abs((ynew-yi)/yi);
+
+%while errx>tol && erry>tol
+for i=1:49 %used to say -12:.5:12 
+   
+      for j=1:49
+            
+
+            xnew=xi-alpha*Ux(i,j);
+%             errx = abs((xnew-xi)/xi);
+            ynew=yi-alpha*Uy(i,j);
+%             err = abs((ynew-yi)/yi);
 
             gvecx=[gvecx;xi];
             gvecy=[gvecy;yi];
-            i=i+1;
+
             iter=iter+1;
+            j=j+1;
             xi=xnew;
             yi=xnew;
             
@@ -89,13 +96,17 @@ while errx>tol && erry>tol
 %         disp(y)
           
 %         end
-%     end
+      end
+     i=i+1;
 end
 
 figure(3)
 %r=zeros(length(gvecx));
 %plot3(gvecx,gvecy,r)
+hold on 
 scatter(gvecx,gvecy);
+contour(x,y,U);
+hold off
 %hold off
 % figure(2)
 % hold on
