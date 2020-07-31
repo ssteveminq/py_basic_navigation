@@ -2,12 +2,17 @@
 clc 
 clear all 
 close all
-K=35; %attractive potential 
-E=15; %repulsive potential
+K=45; %attractive potential 
+E=35; %repulsive potential
 % area_width=12; %potential area width (m)
+
+% K=50; %attractive potential 
+% E=80; %repulsive potential
+%>>>>>>> fc91092aa4cacc1af4cea39977739032d174c6de
 sx=10; % start pos x
 sy=11; %start pos y
 gx=-1; %goal pos x
+%<<<<<<< HEAD
 gy=-5; %goal pos y
 ox=[5.0 6.05]; %obstacle x pos
 oy= [-3.0 6.05]; %obstacle y pos
@@ -15,6 +20,14 @@ oy= [-3.0 6.05]; %obstacle y pos
 res=0.25;
 [x,y] = meshgrid(-12:res:12,-12:res:12);
 r=((x-gx).^2+(y-gy).^2).^.5;%Distance to Goal
+%=======
+%gy=-2; %goal pos y
+%ox=[5 6]; %obstacle x pos
+%oy= [-3 6]; %obstacle y pos
+%[x,y]= meshgrid(-12:1:12); 
+%[x,y] = meshgrid(-12:1.0:12,-12:1.0:12);
+%r=((x-gx).^2+(y-gx).^2).^.5;%Distance to Goal
+%>>>>>>> fc91092aa4cacc1af4cea39977739032d174c6de
 r1=((x-ox(1)).^2+(y-oy(1)).^2).^.5;%Distance to Obs1
 r2=((x-ox(2)).^2+(y-oy(2)).^2).^.5;%Distance to Obs2
 U=K.*r+E./r1*+E./r2;
@@ -61,7 +74,7 @@ quiver(x,y,u,v,res)
 %plot(Ux,Uy);
 xnew=0;
 ynew=0;
-i=1;
+
 iter=0;
 % x=-2;
 % y=2;
@@ -69,8 +82,13 @@ iter=0;
 % maxiter=100;
 errx=1;
 erry=1;
+%<<<<<<< HEAD
 alpha=0.03;
 tol=0.3;
+%=======
+%alpha=.25;
+%tol=.75;
+%>>>>>>> fc91092aa4cacc1af4cea39977739032d174c6de
 xi=sx;
 yi=sy;
 gvecx=[];
@@ -83,10 +101,28 @@ hold on
 contour(x,y,U)
 scatter(sx,sy,'b')
 scatter(gy,gy,'r')
+% Udx=@(xs,ys)((50*(xs-1))/(xs^2-2*xs+ys^2+5-4*ys)^.5)-((80*(xs-5))/(xs^2-10*xs+ys^2+34-6*ys)^1.5)-((80*(xs-6))/(xs^2-12*xs+ys^2+72-12*ys)^1.5);
+% Udy=@(xs,ys)((50*(ys-2))/(ys^2-4*ys+xs^2+5-2*xs)^.5)-((80*(ys-3))/(ys^2-6*ys+xs^2+34-10*xs)^1.5)-((80*(ys-6))/(ys^2-12*ys+xs^2+72-12*xs)^1.5);
+% xs=10;
+% ys=10;
+% while xs~=gx && ys~=gy
+%     xs=xs-alpha*Udx(xs,ys);
+%     ys=ys-alpha*Udy(xs,ys);
+%     iter=iter+1;
+%     scatter(xs,ys,'g')
+% end
+% syms xs ys
+% U=@(xs,ys)((K*((xs-gx)^2+(ys-gy)^2)^.5)+(E/((xs-xo1)^2+(ys-yo1)^2)^.5)+(E/((xs-xo2)^2+(ys-yo2)^2)^.5));
 
+%<<<<<<< HEAD
 xmin =-12.0;
 ymin =-12.0;
 maxiter=500;
+%=======
+%for i=1:25 %used to say -12:.5:12 
+   
+      %for j=1:25
+%>>>>>>> fc91092aa4cacc1af4cea39977739032d174c6de
 
 % for i=1:25 %used to say -12:.5:12 
    
@@ -117,10 +153,11 @@ while iter<maxiter
 %          err = abs((ynew-yi)/yi);
       
 
-            gvecx=[gvecx;xi];
-            gvecy=[gvecy;yi];
+%             gvecx=[gvecx;xnew];
+%             gvecy=[gvecy;ynew];
 
             iter=iter+1;
+%<<<<<<< HEAD
        
             scatter(xi,yi,'g')
             if (abs(xnew-gx)<tol) && (abs(ynew-gy)<tol)
@@ -136,16 +173,38 @@ while iter<maxiter
             disp(xi);
             disp("y");
             disp(yi);
+%=======
+%             %j=j+1;
+%              while xi~=gx && yi~=gy
+             %scatter(xi,yi,'g')
+            %if xi<=gx+tol && xi>=gx-tol && yi<=gy+tol && yi>=gy-tol
+                %disp('Goal Reached');
+                %disp(xi);
+                %disp(yi);
+%                 
+%                 
+%         
+            %end
+            %xi=xnew;
+            %yi=ynew;
+%>>>>>>> fc91092aa4cacc1af4cea39977739032d174c6de
           
 %         disp("x is")
 %         disp(x)
 %         disp("y is")
 %         disp(y)
           
+%<<<<<<< HEAD
 %         end
 %       end
 
       
+%=======
+%        end
+%       end
+%      
+%       
+%>>>>>>> fc91092aa4cacc1af4cea39977739032d174c6de
 end
 hold off
  
@@ -171,10 +230,30 @@ hold off
 % quiver(x,y,Ux,Uy)
 % hold off
 %%
-/
+%<<<<<<< HEAD
+%/
+%=======
+% syms xs ys
+% Iter=0;
+% Maxiter=25;
+% Udx=((50*(xs-1))/(xs^2-2*xs+ys^2+5-4*ys)^.5)-((80*(xs-5))/(xs^2-10*xs+ys^2+34-6*ys)^1.5)-((80*(xs-6))/(xs^2-12*xs+ys^2+72-12*ys)^1.5);
+% Udy=((50*(ys-2))/(ys^2-4*ys+xs^2+5-2*xs)^.5)-((80*(ys-3))/(ys^2-6*ys+xs^2+34-10*xs)^1.5)-((80*(ys-6))/(ys^2-12*ys+xs^2+72-12*xs)^1.5);
+% while Iter<Maxiter
+%     xs=xs-alpha*Udx(xs,yi);
+%     ys=ys-alpha*Udx(xs,ys);
+%     disp("Iter=");
+%     disp(Iter);
+%     disp("xi=")
+%     disp(xs);
+%     disp("yi=");
+%     disp(ys);
+% end
+% %%
+%>>>>>>> fc91092aa4cacc1af4cea39977739032d174c6de
 function circle (xc,yc,r)
 ang=0:.01:2*pi;
 xp=r*cos(ang);
 yp=r*sin(ang);
 plot(xc+xp,yc+yp);
 end
+
