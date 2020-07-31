@@ -1,17 +1,15 @@
 % %Parameters
-clc 
-clear all 
-close all
+
 K=50; %attractive potential 
 E=80; %repulsive potential
-% area_width=12; %potential area width (m)
+
 sx=10; % start pos x
 sy=10; %start pos y
 gx=-1; %goal pos x
 gy=-2; %goal pos y
 ox=[5 6]; %obstacle x pos
 oy= [-3 6]; %obstacle y pos
-% [x,y]= meshgrid(-12:.5:12); 
+%[x,y]= meshgrid(-12:1:12); 
 [x,y] = meshgrid(-12:1.0:12,-12:1.0:12);
 r=((x-gx).^2+(y-gx).^2).^.5;%Distance to Goal
 r1=((x-ox(1)).^2+(y-oy(1)).^2).^.5;%Distance to Obs1
@@ -59,7 +57,7 @@ contour(x,y,U);
 %plot(Ux,Uy);
 xnew=0;
 ynew=0;
-i=1;
+
 iter=0;
 % x=-2;
 % y=2;
@@ -67,7 +65,7 @@ iter=0;
 % maxiter=100;
 errx=1;
 erry=1;
-alpha=.1;
+alpha=.25;
 tol=.75;
 xi=sx;
 yi=sy;
@@ -81,43 +79,55 @@ hold on
 contour(x,y,U)
 scatter(sx,sy,'b')
 scatter(gy,gy,'r')
+% Udx=@(xs,ys)((50*(xs-1))/(xs^2-2*xs+ys^2+5-4*ys)^.5)-((80*(xs-5))/(xs^2-10*xs+ys^2+34-6*ys)^1.5)-((80*(xs-6))/(xs^2-12*xs+ys^2+72-12*ys)^1.5);
+% Udy=@(xs,ys)((50*(ys-2))/(ys^2-4*ys+xs^2+5-2*xs)^.5)-((80*(ys-3))/(ys^2-6*ys+xs^2+34-10*xs)^1.5)-((80*(ys-6))/(ys^2-12*ys+xs^2+72-12*xs)^1.5);
+% xs=10;
+% ys=10;
+% while xs~=gx && ys~=gy
+%     xs=xs-alpha*Udx(xs,ys);
+%     ys=ys-alpha*Udy(xs,ys);
+%     iter=iter+1;
+%     scatter(xs,ys,'g')
+% end
+% syms xs ys
+% U=@(xs,ys)((K*((xs-gx)^2+(ys-gy)^2)^.5)+(E/((xs-xo1)^2+(ys-yo1)^2)^.5)+(E/((xs-xo2)^2+(ys-yo2)^2)^.5));
 
 for i=1:25 %used to say -12:.5:12 
    
       for j=1:25
-            
 
             xnew=xi-alpha*Ux(i,j);
 %             errx = abs((xnew-xi)/xi);
             ynew=yi-alpha*Uy(i,j);
 %             err = abs((ynew-yi)/yi);
 
-            gvecx=[gvecx;xi];
-            gvecy=[gvecy;yi];
+%             gvecx=[gvecx;xnew];
+%             gvecy=[gvecy;ynew];
 
             iter=iter+1;
-            j=j+1;
-            scatter(xi,yi,'g')
+%             %j=j+1;
+%              while xi~=gx && yi~=gy
+             scatter(xi,yi,'g')
             if xi<=gx+tol && xi>=gx-tol && yi<=gy+tol && yi>=gy-tol
                 disp('Goal Reached');
                 disp(xi);
                 disp(yi);
-                
-                
-        
+%                 
+%                 
+%         
             end
             xi=xnew;
-            yi=xnew;
+            yi=ynew;
           
 %         disp("x is")
 %         disp(x)
 %         disp("y is")
 %         disp(y)
           
-%         end
+%        end
       end
-      i=i+1;
-      
+%      
+%       
 end
 hold off
  
@@ -143,25 +153,26 @@ hold off
 % quiver(x,y,Ux,Uy)
 % hold off
 %%
-syms xs ys
-Iter=0;
-Maxiter=25;
-Udx=((50*(xs-1))/(xs^2-2*xs+ys^2+5-4*ys)^.5)-((80*(xs-5))/(xs^2-10*xs+ys^2+34-6*ys)^1.5)-((80*(xs-6))/(xs^2-12*xs+ys^2+72-12*ys)^1.5);
-Udy=((50*(ys-2))/(ys^2-4*ys+xs^2+5-2*xs)^.5)-((80*(ys-3))/(ys^2-6*ys+xs^2+34-10*xs)^1.5)-((80*(ys-6))/(ys^2-12*ys+xs^2+72-12*xs)^1.5);
-while Iter<Maxiter
-    xs=xs-alpha*Udx(xs,yi);
-    ys=ys-alpha*Udx(xs,ys);
-    disp("Iter=");
-    disp(Iter);
-    disp("xi=")
-    disp(xs);
-    disp("yi=");
-    disp(ys);
-end
-%%
+% syms xs ys
+% Iter=0;
+% Maxiter=25;
+% Udx=((50*(xs-1))/(xs^2-2*xs+ys^2+5-4*ys)^.5)-((80*(xs-5))/(xs^2-10*xs+ys^2+34-6*ys)^1.5)-((80*(xs-6))/(xs^2-12*xs+ys^2+72-12*ys)^1.5);
+% Udy=((50*(ys-2))/(ys^2-4*ys+xs^2+5-2*xs)^.5)-((80*(ys-3))/(ys^2-6*ys+xs^2+34-10*xs)^1.5)-((80*(ys-6))/(ys^2-12*ys+xs^2+72-12*xs)^1.5);
+% while Iter<Maxiter
+%     xs=xs-alpha*Udx(xs,yi);
+%     ys=ys-alpha*Udx(xs,ys);
+%     disp("Iter=");
+%     disp(Iter);
+%     disp("xi=")
+%     disp(xs);
+%     disp("yi=");
+%     disp(ys);
+% end
+% %%
 function circle (xc,yc,r)
 ang=0:.01:2*pi;
 xp=r*cos(ang);
 yp=r*sin(ang);
 plot(xc+xp,yc+yp);
 end
+
